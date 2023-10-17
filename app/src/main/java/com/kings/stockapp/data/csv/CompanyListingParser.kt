@@ -24,6 +24,8 @@ class CompanyListingParser @Inject constructor() : CSVParser<CompanyListing> {
                     symbol ?: return@mapNotNull null,
                     exchange ?: return@mapNotNull null
                 )
+            }.also {
+                reader.close()
             }
         }
     }

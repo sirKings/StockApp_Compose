@@ -1,7 +1,9 @@
 package com.kings.stockapp.data.repository
 
+import com.kings.stockapp.data.csv.CSVParser
 import com.kings.stockapp.data.local.CompanyListingDatabase
 import com.kings.stockapp.data.mapper.toCompanyList
+import com.kings.stockapp.data.mapper.toCompanyListEntity
 import com.kings.stockapp.data.remote.StockApi
 import com.kings.stockapp.domain.model.CompanyListing
 import com.kings.stockapp.domain.repository.CompanyListingRepository
@@ -15,7 +17,8 @@ import javax.inject.Singleton
 @Singleton
 class CompanyListingRepositoryImpl @Inject constructor(
     val api: StockApi,
-    val db: CompanyListingDatabase
+    val db: CompanyListingDatabase,
+    val csvParser: CSVParser<CompanyListing>
 ): CompanyListingRepository {
 
     override fun getCompanyListings(
@@ -39,12 +42,22 @@ class CompanyListingRepositoryImpl @Inject constructor(
                 return@flow
             }else{
                 val remoteListings = try {
-                    api.getListings()
+                    csvParser.parse(api.getListings().byteStream())
                 }catch (e: Exception){
                     e.printStackTrace()
                     emit(Resource.Error(error = "Error ${e.localizedMessage ?: "Could not load data"}"))
+                    null
                 }
 
+                remoteListings?.let {
+                    emit(Resource.Success(data = it))
+                    db.dao.clearListings()
+                    db.dao.insert(
+                        it.map {
+                                companyListing -> companyListing.toCompanyListEntity()
+                        })
+                    emit(Resource.Loading(false))
+                }
             }
         }
     }

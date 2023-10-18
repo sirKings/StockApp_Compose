@@ -7,8 +7,6 @@ import androidx.room.Query
 
 @Dao
 interface CompanyListingDao {
-
-
     @Insert
     suspend fun insert(listings: List<CompanyListingEntity>)
 

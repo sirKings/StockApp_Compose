@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CompanyListingViewModel @Inject constructor(
-    val repository: CompanyListingRepository
+    private val repository: CompanyListingRepository
 ): ViewModel() {
 
     var state by mutableStateOf(CompanyListViewState())

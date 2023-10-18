@@ -3,7 +3,7 @@ package com.kings.stockapp.data.local
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity("listing")
 data class CompanyListingEntity(
     val name: String,
     val symbol:String,

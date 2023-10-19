@@ -1,7 +1,7 @@
 package com.kings.stockapp.presentation.company_listing
 
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.kings.stockapp.domain.model.CompanyListing
-
 
 
 data class CompanyListViewState(

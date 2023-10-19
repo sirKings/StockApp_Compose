@@ -21,14 +21,18 @@ class CompanyListingViewModel @Inject constructor(
 
     var state by mutableStateOf(CompanyListViewState())
 
-    var searchJob: Job? = null
+    private var searchJob: Job? = null
+
+    init {
+        getCompanyListings()
+    }
 
     fun onEvent(events: CompanyListViewEvents){
         when(events){
             CompanyListViewEvents.Refresh -> {
                 getCompanyListings(fromRemote = true)
             }
-            is CompanyListViewEvents.onSearchQuery -> {
+            is CompanyListViewEvents.OnSearchQuery -> {
                 state = state.copy(searchQuery = events.string)
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch {

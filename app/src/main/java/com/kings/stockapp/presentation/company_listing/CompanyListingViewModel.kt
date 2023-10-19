@@ -29,7 +29,7 @@ class CompanyListingViewModel @Inject constructor(
 
     fun onEvent(events: CompanyListViewEvents){
         when(events){
-            CompanyListViewEvents.Refresh -> {
+            is CompanyListViewEvents.Refresh -> {
                 getCompanyListings(fromRemote = true)
             }
             is CompanyListViewEvents.OnSearchQuery -> {

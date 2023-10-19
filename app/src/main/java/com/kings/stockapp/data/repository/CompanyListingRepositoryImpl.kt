@@ -16,9 +16,9 @@ import javax.inject.Singleton
 
 @Singleton
 class CompanyListingRepositoryImpl @Inject constructor(
-    val api: StockApi,
-    val db: CompanyListingDatabase,
-    val csvParser: CSVParser<CompanyListing>
+    private val api: StockApi,
+    private val db: CompanyListingDatabase,
+    private val csvParser: CSVParser<CompanyListing>
 ): CompanyListingRepository {
 
     override fun getCompanyListings(

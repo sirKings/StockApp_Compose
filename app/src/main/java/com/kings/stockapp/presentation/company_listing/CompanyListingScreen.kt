@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.kings.stockapp.presentation.company_listing.component.Listing
@@ -21,6 +22,7 @@ import com.kings.stockapp.presentation.company_listing.component.SearchBar
 
 @Composable
 fun CompanyListingScreen(
+    navController: NavController,
     viewModel: CompanyListingViewModel = hiltViewModel()
 ) {
     val state = viewModel.state
@@ -51,7 +53,9 @@ fun CompanyListingScreen(
             LazyColumn(modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
                 items(state.companies.size) { i ->
                     val item = state.companies[i]
-                    Listing(modifier = Modifier, item = item)
+                    Listing(modifier = Modifier, item = item, onListingSelected = {
+                            symbol -> navController.navigate("info/$symbol")
+                    })
                     if (i < state.companies.size) {
                         Divider()
                     }

@@ -18,14 +18,15 @@ import com.kings.stockapp.domain.model.CompanyListing
 @Composable
 fun Listing(
     modifier: Modifier,
-    item: CompanyListing
+    item: CompanyListing,
+    onListingSelected: (symbol: String) -> Unit
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
             .clickable {
-
+                onListingSelected(item.name)
             }
         ,
     ) {
@@ -58,5 +59,5 @@ fun Listing(
 @Composable
 fun ListingPreview() {
     val item = CompanyListing("Tesla", "TXS", "NYSE")
-    Listing(modifier = Modifier, item = item)
+    Listing(modifier = Modifier, item = item){}
 }

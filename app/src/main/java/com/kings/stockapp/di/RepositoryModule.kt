@@ -20,13 +20,13 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindCSVParser(
+    abstract fun bindCompanyCSVParser(
         parser: CompanyListingParser
     ): CSVParser<CompanyListing>
 
     @Binds
     @Singleton
-    abstract fun bindCSVParser(
+    abstract fun bindIntraDayInfoCSVParser(
         parser: IntraDayInfoParser
     ): CSVParser<IntraDayInfo>
 
